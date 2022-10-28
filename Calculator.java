@@ -1,70 +1,41 @@
 public abstract class Calculator {
+
 	public static double[] add(double[] num1, double[] num2) {
-		double somaParteReal = num1[0] + num2[0];
-		double somaParteImaginaria = num1[1] + num2[1];
-    double[] newNumber = { somaParteReal, somaParteImaginaria };
+		double addReal = num1[0] + num2[0];
+		double addImaginary = num1[1] + num2[1];
+
+		double[] newNumber = { addReal, addImaginary };
 		return newNumber;
 	}
 
-	public static double[] subtract(double[] a, double[] b) {
-		double subtracaoParteReal = a.getParteReal() - b.getParteReal();
-		double subtracaoParteImaginaria = a.getParteImaginaria() - b.getParteImaginaria();
-    double[] newNumber = { somaParteReal, somaParteImaginaria };
+	public static double[] subtract(double[] num1, double[] num2) {
+		double realSubtraction = num1[0] - num2[0];
+		double imaginarySubtraction = num1[1] - num2[1];
+
+		double[] newNumber = { realSubtraction, imaginarySubtraction };
 		return newNumber;
 	}
 
-  public static double[] division(double[] a, double[] b) {
-    double denominador = (quadrado(b.getParteReal()) + quadrado(b.getParteImaginaria()));
-    handleDenominadorZero(denominador);
-    double numeradorReal = ((a.getParteReal() * b.getParteReal())
-        + (a.getParteImaginaria() * b.getParteImaginaria()));
-    double numeradorImaginario = ((b.getParteReal() * a.getParteImaginaria())
-        - (a.getParteReal() * b.getParteImaginaria()));
-    double divisaoParteReal = numeradorReal / denominador;
-    double divisaoParteImaginaria = numeradorImaginario / denominador;
-    double[] newNumber = { somaParteReal, somaParteImaginaria };
-    return newNumber;
-  }
+	public static double[] division(double[] num1, double[] num2) {
+		double denominator = num2[0] * num2[0] + num2[1] * num2[1];
 
-	public static double[] multiply(double[] a, double[] b) {
-		double multiplicacaoParteReal = (a.getParteReal() * b.getParteReal())
-				- (a.getParteImaginaria() * b.getParteImaginaria());
-		double multiplicacaoParteImaginaria = ((a.getParteReal() * b.getParteImaginaria())
-				+ (b.getParteReal() * a.getParteImaginaria()));
-        
-    double[] newNumber = { somaParteReal, somaParteImaginaria };
-    return newNumber;
-	}
+		double realNumber = num1[0] * num2[0] + num1[1] * num2[1];
+		double imaginaryNumber = ((num2[0] * num1[1])
+				- (num1[0] * num2[1]));
 
-	public static double[] inverse(double[] n) {
-		double[] novo = new double[](n);
-		double denominador = quadrado(novo.getParteReal()) + quadrado(novo.getParteImaginaria());
-		handleDenominadorZero(denominador);
-		double parteReal = novo.getParteReal() / denominador;
-		double parteImaginaria = -novo.getParteImaginaria() / denominador;
-		novo.setParteReal(parteReal);
-		novo.setParteImaginaria(parteImaginaria);
-		double[] newNumber = { somaParteReal, somaParteImaginaria };
+		double realDivision = realNumber / denominator;
+		double imaginaryDivision = imaginaryNumber / denominator;
+
+		double[] newNumber = { realDivision, imaginaryDivision };
 		return newNumber;
 	}
 
-	public static double[] change(double[] n) {
-		double[] novo = new double[](n);
-		if (novo.getParteReal() != 0)
-			novo.setParteReal(-novo.getParteReal());
-		if (novo.getParteImaginaria() != 0)
-			novo.setParteImaginaria(-novo.getParteImaginaria());
-      double[] newNumber = { somaParteReal, somaParteImaginaria };
-      return newNumber;
-	}
+	public static double[] multiply(double[] num1, double[] num2) {
+		double realMultiplication = (num1[0] * num2[0]) - (num1[1] * num2[1]);
+		double imaginaryMultiplication = (num1[0] * num2[1]) + (num2[0] * num1[1]);
 
-	public static double[] conjugado(double[] n) {
-		double[] newNumber = { somaParteReal, somaParteImaginaria };
+		double[] newNumber = { realMultiplication, imaginaryMultiplication };
 		return newNumber;
 	}
 
-	public static double absolute(double[] n) {
-		double[] newNumber = { somaParteReal, somaParteImaginaria };
-		return newNumber;
-	}
 }
