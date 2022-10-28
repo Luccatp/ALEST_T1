@@ -1,17 +1,27 @@
 class ComplexNumber{
+  private double _re;
+  private double _im;
+
     public ComplexNumber(double re, double im)
     {
-        _re = re;
-        _im = im;
+        this._re = re;
+        this._im = im;
     }
  
-    private double _re;
     public double getReal(){
        return _re;
     }
-    private double _im;
+
+    public void setReal(double _re) {
+      this._re = _re;
+    } 
+
     public double getImaginary(){
         return _im;
+    }
+
+    public void setImaginary(double _im) {
+      this._im =_im;
     }
 
     public int compareTo(ComplexNumber peek) {

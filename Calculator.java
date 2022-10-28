@@ -1,40 +1,40 @@
 public abstract class Calculator {
 
-	public static double[] add(double[] num1, double[] num2) {
-		double addReal = num1[0] + num2[0];
-		double addImaginary = num1[1] + num2[1];
+	public static ComplexNumber add(ComplexNumber num1, ComplexNumber num2) {
+		double addReal = num1.getReal() + num2.getReal();
+		double addImaginary = num1.getImaginary() + num2.getImaginary();
 
-		double[] newNumber = { addReal, addImaginary };
+		ComplexNumber newNumber = new ComplexNumber(addReal, addImaginary);
 		return newNumber;
 	}
 
-	public static double[] subtract(double[] num1, double[] num2) {
-		double realSubtraction = num1[0] - num2[0];
-		double imaginarySubtraction = num1[1] - num2[1];
+	public static ComplexNumber subtract(ComplexNumber num1, ComplexNumber num2) {
+		double realSubtraction = num1.getReal() - num2.getReal();
+		double imaginarySubtraction = num1.getImaginary() - num2.getImaginary();
 
-		double[] newNumber = { realSubtraction, imaginarySubtraction };
+		ComplexNumber newNumber = new ComplexNumber(realSubtraction, imaginarySubtraction);
 		return newNumber;
 	}
 
-	public static double[] division(double[] num1, double[] num2) {
-		double denominator = num2[0] * num2[0] + num2[1] * num2[1];
+	public static ComplexNumber division(ComplexNumber num1, ComplexNumber num2) {
+		double denominator = num2.getReal() * num2.getReal() + num2.getImaginary() * num2.getImaginary();
 
-		double realNumber = num1[0] * num2[0] + num1[1] * num2[1];
-		double imaginaryNumber = ((num2[0] * num1[1])
-				- (num1[0] * num2[1]));
+		double realNumber = num1.getReal() * num2.getReal() + num1.getImaginary() * num2.getImaginary();
+		double imaginaryNumber = ((num2.getReal() * num1.getImaginary())
+				- (num1.getReal() * num2.getImaginary()));
 
 		double realDivision = realNumber / denominator;
 		double imaginaryDivision = imaginaryNumber / denominator;
 
-		double[] newNumber = { realDivision, imaginaryDivision };
+		ComplexNumber newNumber = new ComplexNumber(realDivision, imaginaryDivision);
 		return newNumber;
 	}
 
-	public static double[] multiply(double[] num1, double[] num2) {
-		double realMultiplication = (num1[0] * num2[0]) - (num1[1] * num2[1]);
-		double imaginaryMultiplication = (num1[0] * num2[1]) + (num2[0] * num1[1]);
+	public static ComplexNumber multiply(ComplexNumber num1, ComplexNumber num2) {
+		double realMultiplication = (num1.getReal() * num2.getReal()) - (num1.getImaginary() * num2.getImaginary());
+		double imaginaryMultiplication = (num1.getReal() * num2.getImaginary()) + (num2.getReal() * num1.getImaginary());
 
-		double[] newNumber = { realMultiplication, imaginaryMultiplication };
+		ComplexNumber newNumber = new ComplexNumber(realMultiplication, imaginaryMultiplication);
 		return newNumber;
 	}
 
