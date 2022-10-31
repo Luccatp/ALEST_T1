@@ -3,132 +3,114 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class LerArquivo<E> {
-    static String FILE_PATH = "arquivosTeste\\arquivoTeste.txt";
 
-    private Stack<ComplexNumber> pilha = new Stack<ComplexNumber>();
-    private ComplexNumber smallerNumber = new ComplexNumber(0, 0);
-    private ComplexNumber greaterNumber = new ComplexNumber(0, 0);
+	private Stack<ComplexNumber> pilha = new Stack<ComplexNumber>();
 
-    File file = new File(FILE_PATH);
+	public void main() {
+		File file = new File("arquivosTeste\\arquivoTeste.txt");
+		int greaterNumber = 0;
+		String proximo = "";
+		try (Scanner sc = new Scanner(file)) {
+			System.out.println("funcionando");
+			while (sc.hasNext()) {
+				if (greaterNumber < pilha.size()) {
+					greaterNumber = pilha.size();
+				}
+				proximo = sc.nextLine();
+				System.out.println("has line " + proximo);
 
-    public void main() {
-        String next = "";
-        try (Scanner sc = new Scanner(file)) {
-            System.out.println("passou scanner");
-            while (sc.hasNext()) {
-                next = sc.nextLine();
-                System.out.println("has line: " + sc.nextLine());
+				handleOperation(proximo);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			System.out.println("topo " + pilha.peek());
+			System.out.println("tamanho maximo " + greaterNumber);
+			System.out.println("tamanho final " + pilha.size());
+		}
+	}
 
-                if ("quit".equalsIgnoreCase(next))
-                    break;
+	private boolean isNumber(String next) {
+		try {
+			String[] entrada = next.split(" ");
+			int numReal = Integer.parseInt(entrada[0]);
+			int numImaginario = Integer.parseInt(entrada[1]);
+			ComplexNumber numCompleto = new ComplexNumber(numReal, numImaginario);
+			pilha.push(numCompleto);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-                handleOperation(next);
+	private void handleOperation(String next) {
+		ComplexNumber num1;
+		ComplexNumber num2;
+		if (!isNumber(next)) {
+			switch (next) {
+				case "+":
+					num1 = pilha.pop();
+					num2 = pilha.pop();
+					pilha.addElement(Calculator.add(num1, num2));
+					break;
 
-                if (!pilha.isEmpty()) {
-                    if (greaterNumber.compareTo(pilha.peek()) < 0)
-                        System.out.println("greaterNumber: " + pilha.peek());
-                    greaterNumber = pilha.peek();
+				case "-":
+					num1 = pilha.pop();
+					num2 = pilha.pop();
+					pilha.addElement(Calculator.subtract(num1, num2));
+					break;
 
-                    if (smallerNumber.compareTo(pilha.peek()) > 0)
-                        smallerNumber = pilha.peek();
+				case "*":
+					num1 = pilha.pop();
+					num2 = pilha.pop();
+					pilha.addElement(Calculator.multiply(num1, num2));
+					break;
 
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Erro na leitura de arquivo.\n Tente novamente.");
-        } finally {
-            System.out.println("\n\t===== FIM =====");
-            System.out.println("|= Tamanho máximo da pilha: " + greaterNumber);
-            System.out.println("|= Tamanho final da pilha: " + pilha.size());
-            System.out.println("|= Topo da pilha: " + pilha.peek());
-        }
-    }
+				case "/":
+					num1 = pilha.pop();
+					num2 = pilha.pop();
 
-    private boolean isNumber(String next) {
-        try {
-            String[] entrada = next.split(" ");
-            Double numReal = Double.parseDouble(entrada[0]);
-            Double numImaginario = Double.parseDouble(entrada[1]);
-            ComplexNumber numCompleto = new ComplexNumber(numReal, numImaginario);
-            pilha.push(numCompleto);
-            return true;
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-    }
+					pilha.addElement(Calculator.division(num1, num2));
+					break;
 
-    private void handleOperation(String next) {
-        ComplexNumber num1;
-        ComplexNumber num2;
-        if (!isNumber(next)) {
-            switch (next) {
-                case "+":
-                    num1 = pilha.pop();
-                    num2 = pilha.pop();
-                    pilha.add(Calculator.add(num1, num2));
-                    break;
-            
-                case "-":
-                    num1 = pilha.pop();
-                    num2 = pilha.pop();
-                    pilha.add(Calculator.subtract(num1, num2));
-                    break;
-                
-                case "*":
-                    num1 = pilha.pop();
-                    num2 = pilha.pop();
-                    pilha.add(Calculator.multiply(num1, num2));
-                    break;
-                
-                case "/":
-                    num1 = pilha.pop();
-                    num2 = pilha.pop();
-                
-                    pilha.add(Calculator.division(num1, num2));
-                    break;
-                    
-                case "inv":
-                    num1 = pilha.pop();
-                    pilha.add(Calculator.(num1));            
-                    break;
-                
-                case "chs":
-                    num1 = pilha.pop();
-                    pilha.add(Calculator.(num1));
-                    break;
-                    
-                case "conj":
-                    num1 = pilha.pop();
-                    pilha.add(Calculator.(num1));
-                    break;
-                    
-                case "abs":
-                    num1 = pilha.pop();
-                    pilha.add(new NumeroComplexo(CalculadoraComplexo.absolute(num1), 0));
-                    break;
-                
-                case "pop":
-                    pilha.pop();
-                    break;
-                    
-                case "dup":
-                    Calculator.();
-                    break;
-                    
-                case "swap":
-                swap();
-                break;
-                
-                case "print":
-                    print();
-                    break;
-                
-                default:
-                    System.out.println("Operação (" + next + ") inválida.");
-                    break;
-                
-            }
-        }
-    }
+				case "inv":
+					num1 = pilha.pop();
+					pilha.addElement(Calculator.inv(num1));
+					break;
+
+				case "chs":
+					num1 = pilha.pop();
+					pilha.addElement(Calculator.chs(num1));
+					break;
+
+				case "conj":
+					num1 = pilha.pop();
+					pilha.addElement(Calculator.conj(num1));
+					break;
+
+				case "abs":
+					num1 = pilha.pop();
+					pilha.addElement(new ComplexNumber(Calculator.abs(num1), 0));
+					break;
+
+				case "pop":
+					pilha.pop();
+					break;
+
+				case "dup":
+					num1 = pilha.peek();
+					pilha.addElement(num1);
+					break;
+
+				case "swap":
+					num1 = pilha.pop();
+					num2 = pilha.pop();
+					pilha.addElement(num1);
+					pilha.addElement(num2);
+					break;
+				default:
+					break;
+			}
+		}
+	}
 }

@@ -997,5 +997,3 @@ dup
 pop
 +
 swap
-print
-quit

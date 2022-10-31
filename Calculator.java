@@ -1,41 +1,69 @@
 public abstract class Calculator {
 
 	public static ComplexNumber add(ComplexNumber num1, ComplexNumber num2) {
-		double addReal = num1.getReal() + num2.getReal();
-		double addImaginary = num1.getImaginary() + num2.getImaginary();
+		int addReal = num1.getReal() + num2.getReal();
+		int addImaginary = num1.getImaginary() + num2.getImaginary();
 
-		ComplexNumber newNumber = new ComplexNumber(addReal, addImaginary);
-		return newNumber;
+		return new ComplexNumber(addReal, addImaginary);
 	}
 
 	public static ComplexNumber subtract(ComplexNumber num1, ComplexNumber num2) {
-		double realSubtraction = num1.getReal() - num2.getReal();
-		double imaginarySubtraction = num1.getImaginary() - num2.getImaginary();
+		int realSubtraction = num1.getReal() - num2.getReal();
+		int imaginarySubtraction = num1.getImaginary() - num2.getImaginary();
 
-		ComplexNumber newNumber = new ComplexNumber(realSubtraction, imaginarySubtraction);
-		return newNumber;
+		return new ComplexNumber(realSubtraction, imaginarySubtraction);
 	}
 
 	public static ComplexNumber division(ComplexNumber num1, ComplexNumber num2) {
-		double denominator = num2.getReal() * num2.getReal() + num2.getImaginary() * num2.getImaginary();
+		int denominator = num2.getReal() * num2.getReal() + num2.getImaginary() * num2.getImaginary();
 
-		double realNumber = num1.getReal() * num2.getReal() + num1.getImaginary() * num2.getImaginary();
-		double imaginaryNumber = ((num2.getReal() * num1.getImaginary())
-				- (num1.getReal() * num2.getImaginary()));
+		int realNumber = num1.getReal() * num2.getReal() + num1.getImaginary() * num2.getImaginary();
+		int imaginaryNumber = (num2.getReal() * num1.getImaginary())
+				- (num1.getReal() * num2.getImaginary());
 
-		double realDivision = realNumber / denominator;
-		double imaginaryDivision = imaginaryNumber / denominator;
+		if (denominator == 0) {
+			denominator = 1;
+		}
 
-		ComplexNumber newNumber = new ComplexNumber(realDivision, imaginaryDivision);
-		return newNumber;
+		int realDivision = realNumber / denominator;
+		int imaginaryDivision = imaginaryNumber / denominator;
+
+		return new ComplexNumber(realDivision, imaginaryDivision);
 	}
 
 	public static ComplexNumber multiply(ComplexNumber num1, ComplexNumber num2) {
-		double realMultiplication = (num1.getReal() * num2.getReal()) - (num1.getImaginary() * num2.getImaginary());
-		double imaginaryMultiplication = (num1.getReal() * num2.getImaginary()) + (num2.getReal() * num1.getImaginary());
+		int realMultiplication = (num1.getReal() * num2.getReal()) - (num1.getImaginary() * num2.getImaginary());
+		int imaginaryMultiplication = (num1.getReal() * num2.getImaginary()) + (num2.getReal() * num1.getImaginary());
 
-		ComplexNumber newNumber = new ComplexNumber(realMultiplication, imaginaryMultiplication);
-		return newNumber;
+		return new ComplexNumber(realMultiplication, imaginaryMultiplication);
+	}
+
+	public static ComplexNumber inv(ComplexNumber num) {
+		int denominator = num.getReal() * num.getReal() + num.getImaginary() * num.getImaginary();
+		if (denominator == 0) {
+			denominator = 1;
+		}
+		int newReal = num.getReal() / denominator;
+		int newImaginary = num.getImaginary() / denominator;
+
+		return new ComplexNumber(newReal, newImaginary);
+	}
+
+	public static ComplexNumber chs(ComplexNumber num) {
+		int newReal = -num.getReal();
+		int newImaginary = -num.getImaginary();
+
+		return new ComplexNumber(newReal, newImaginary);
+	}
+
+	public static ComplexNumber conj(ComplexNumber num) {
+		int newImaginary = -num.getImaginary();
+
+		return new ComplexNumber(num.getReal(), newImaginary);
+	}
+
+	public static int abs(ComplexNumber num) {
+		return (int) Math.sqrt(num.getReal() * num.getReal() + num.getImaginary() * num.getImaginary());
 	}
 
 }
